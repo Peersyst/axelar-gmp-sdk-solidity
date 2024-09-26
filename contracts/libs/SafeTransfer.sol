@@ -21,7 +21,8 @@ library SafeTokenCall {
         (bool success, bytes memory returnData) = address(token).call(callData);
         bool transferred = success && (returnData.length == uint256(0) || abi.decode(returnData, (bool)));
 
-        if (!transferred || address(token).code.length == 0) revert TokenTransferFailed();
+        // Original condition: (!transferred  || address(token).code.length == 0)
+        if (!transferred) revert TokenTransferFailed();
     }
 }
 
